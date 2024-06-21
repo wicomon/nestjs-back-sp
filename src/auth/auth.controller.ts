@@ -17,11 +17,14 @@ import { RawHeaders } from './decorators/raw-headers.decorator';
 import { UserRoleGuard } from './guards/user-role.guard';
 import { Auth, RoleProtected } from './decorators';
 import { IValidRoles } from './interfaces';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiResponse({ status: 201, description: 'User Created', type: UserEntity })
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
     return this.authService.createUser(createUserDto);
